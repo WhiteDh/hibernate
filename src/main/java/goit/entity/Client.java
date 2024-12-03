@@ -2,6 +2,8 @@ package goit.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "client")
 public class Client {
@@ -11,6 +13,9 @@ public class Client {
 
     @Column(length = 200, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets;
 
     public Long getId() {
         return id;

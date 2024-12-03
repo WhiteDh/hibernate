@@ -10,22 +10,20 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "from_planet_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "from_planet_id", nullable = false)
     private Planet fromPlanet;
 
-    @ManyToOne
-    @JoinColumn(name = "to_planet_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "to_planet_id", nullable = false)
     private Planet toPlanet;
-
 
     public Ticket() {
         this.createdAt = LocalDateTime.now();

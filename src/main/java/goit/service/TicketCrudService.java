@@ -10,6 +10,9 @@ public class TicketCrudService {
 
     // create
     public void save(Ticket ticket) {
+        if (ticket.getClient() == null || ticket.getFromPlanet() == null || ticket.getToPlanet() == null) {
+            throw new IllegalArgumentException("Ticket must have a valid client and planets.");
+        }
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
             session.persist(ticket);
@@ -26,6 +29,9 @@ public class TicketCrudService {
 
     // update
     public void update(Ticket ticket) {
+        if (ticket.getClient() == null || ticket.getFromPlanet() == null || ticket.getToPlanet() == null) {
+            throw new IllegalArgumentException("Ticket must have a valid client and planets.");
+        }
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
             session.merge(ticket);
