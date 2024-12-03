@@ -2,9 +2,11 @@ package goit;
 
 import goit.entity.Client;
 import goit.entity.Planet;
+import goit.entity.Ticket;
 import goit.service.ClientCrudService;
 import goit.service.HibernateUtil;
 import goit.service.PlanetCrudService;
+import goit.service.TicketCrudService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,6 +16,7 @@ import org.hibernate.SessionFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -22,6 +25,8 @@ public class Main {
 
         SessionFactory sessionFactory = HibernateUtil.getInstance().getSessionFactory();
         PlanetCrudService planetCrudService = new PlanetCrudService(sessionFactory);
+        ClientCrudService clientCrudService = new ClientCrudService();
+        TicketCrudService ticketCrudService = new TicketCrudService();
 
         // add a new planet
         Planet newPlanet = new Planet();
@@ -82,6 +87,38 @@ public class Main {
         } else {
             System.out.println("Planet still exists: " + deletedPlanet.getName());
         }
+
+
+
+
+        //new ticket
+
+        Planet fromPlanet = planetCrudService.getPlanet("EARTH");
+        Planet toPlanet = planetCrudService.getPlanet("MARS");
+
+        if (fromPlanet == null || toPlanet == null) {
+            System.out.println("One or both planets not found.");
+            return;
+        }
+
+        // get existing client
+        Client client = clientCrudService.findById(5L);
+        if (client == null) {
+            System.out.println("client  not found.");
+            return;
+        }
+
+        // create a new ticket
+        Ticket ticket = new Ticket();
+
+        ticket.setClient(client);
+        ticket.setFromPlanet(fromPlanet);
+        ticket.setToPlanet(toPlanet);
+
+        // save the ticket
+        System.out.println("saving new ticket...");
+        ticketCrudService.save(ticket);
+        System.out.println("ticket saved with ID: " + ticket.getId());
     }
 }
 

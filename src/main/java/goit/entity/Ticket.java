@@ -1,25 +1,35 @@
 package goit.entity;
 
-
 import jakarta.persistence.*;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Ticket {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private java.sql.Timestamp createdAt;
+
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToOne
+    @JoinColumn(name = "from_planet_id")
     private Planet fromPlanet;
 
     @ManyToOne
+    @JoinColumn(name = "to_planet_id")
     private Planet toPlanet;
+
+
+    public Ticket() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -29,11 +39,11 @@ public class Ticket {
         this.id = id;
     }
 
-    public Timestamp getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
