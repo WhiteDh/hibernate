@@ -1,0 +1,6 @@
+2024-12-03 15:09:44.350785+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM planet\000d\000a[*]SELECT * FROM client\000d\000a\000d\000aSELECT * FROM ticket"; SQL statement:
+SELECT * FROM planet
+SELECT * FROM client
+
+SELECT * FROM ticket [42000-232]
